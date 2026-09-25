@@ -90,16 +90,26 @@
     }, 6000);
   }
 
-  function initFormPreview() {
-    var form = $("[data-demo-form]");
+  function initLeadForm() {
+    var form = $("[data-lead-form]");
     var note = $("[data-form-note]");
     if (!form || !note) return;
-    form.addEventListener("submit", function (event) {
+    form.addEventListener("submit", async function (event) {
       event.preventDefault();
       if (!form.reportValidity()) return;
-      note.textContent = "Gracias. El formulario ya está listo; conectaremos el correo comercial para recibir solicitudes reales.";
-      note.classList.add("is-sent");
-      form.reset();
+      var button = $("button[type=submit]", form);
+      button.disabled = true;
+      note.classList.remove("is-sent");
+      note.textContent = "Enviando tu solicitud…";
+      try {
+        var response = await fetch("/api/leads", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(Object.fromEntries(new FormData(form))) });
+        if (!response.ok) throw new Error("lead request failed");
+        note.textContent = "¡Listo! Recibimos tu solicitud. Te contactaremos pronto.";
+        note.classList.add("is-sent");
+        form.reset();
+      } catch (error) {
+        note.textContent = "No pudimos enviar tu solicitud. Escríbenos nuevamente en unos minutos.";
+      } finally { button.disabled = false; }
     });
   }
 
@@ -128,7 +138,7 @@
     safe(initSmoothScroll, "initSmoothScroll");
     safe(initMouseGradient, "initMouseGradient");
     safe(initReveals, "initReveals");
-    safe(initFormPreview, "initFormPreview");
+    safe(initLeadForm, "initLeadForm");
     safe(initJourneyMap, "initJourneyMap");
     safe(initYear, "initYear");
     document.documentElement.classList.add("is-ready");

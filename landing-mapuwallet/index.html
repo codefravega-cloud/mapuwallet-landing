@@ -219,13 +219,17 @@
             <h2>Conozcamos<br />tu <em>local.</em></h2>
             <p>Estamos buscando comercios que quieran probar una forma más visible de incentivar el regreso.</p>
           </div>
-          <form class="contact-form" data-demo-form novalidate>
+          <form class="contact-form" data-lead-form novalidate>
             <label>Tu nombre<input name="nombre" type="text" autocomplete="name" required /></label>
             <label>Nombre del comercio<input name="comercio" type="text" autocomplete="organization" required /></label>
+            <label>WhatsApp<input name="whatsapp" type="tel" autocomplete="tel" inputmode="tel" placeholder="+56 9 1234 5678" required /></label>
             <label>Correo de contacto<input name="correo" type="email" autocomplete="email" required /></label>
+            <label>Plan que te interesa<select name="plan" required><option value="">Selecciona una opción</option><option value="Wallet">Wallet · $20.000 CLP/mes</option><option value="CRM + SMS">CRM + SMS · $25.000 CLP/mes</option><option value="Growth">Growth · desde $50.000 CLP/mes</option></select></label>
             <label>¿Qué te gustaría mejorar?<textarea name="mensaje" rows="3" placeholder="Por ejemplo: que más clientes vuelvan durante la semana."></textarea></label>
+            <label class="sr-only">No completar este campo<input name="website" type="text" tabindex="-1" autocomplete="off" /></label>
+            <input name="origen" type="hidden" value="landing" />
             <button class="button button-light" type="submit">Quiero conversar <span aria-hidden="true">↘</span></button>
-            <p class="form-note" data-form-note aria-live="polite">Sin spam. Esta es una previsualización: la recepción se activa al conectar el correo comercial.</p>
+            <p class="form-note" data-form-note aria-live="polite">Usaremos tus datos solo para responder esta solicitud. Sin spam.</p>
           </form>
         </div>
       </section>
